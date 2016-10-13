@@ -1,1 +1,1 @@
-A very basic node.js and organic-node -based chat implemented for educational purposes.
+A very basic node.js and node-organic -based chat implemented for educational purposes.
