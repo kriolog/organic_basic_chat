@@ -1,11 +1,9 @@
-# organic_basic_chat
-
-A very basic node.js and node-organic -based chat implemented for educational purposes.
+# {{{name}}}
 
 ## setup
 
-    $ git clone https://github.com/kriolog/organic_basic_chat
-    $ cd ./organic_basic_chat
+    $ git clone {{{repo}}}
+    $ cd ./{{{name}}}
     $ npm install
     $ npm install organic-angel -g
 
