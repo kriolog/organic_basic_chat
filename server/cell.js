@@ -2,6 +2,7 @@
 var Nucleus = require('organic-nucleus')
 var Plasma = require('organic-plasma')
 var loadDna = require('organic-dna-loader')
+var replacePlaceholders = require('./lib/replace-placeholders')
 
 module.exports = class Cell {
   constructor () {
@@ -14,6 +15,8 @@ module.exports = class Cell {
   }
 
   build (dna) {
+    replacePlaceholders(dna.fronturls, dna.fronturls)
+
     // # construct core
     var nucleus = new Nucleus(this.plasma, dna)
 
@@ -29,8 +32,8 @@ module.exports = class Cell {
     process.on('SIGINT', this.signintHandler)
   }
 
-  on (pattern, handler, context) {
-    this.plasma.on(pattern, handler, context)
+  on (pattern, handler) {
+    this.plasma.on(pattern, handler)
   }
 
   start (dna, next) {
@@ -51,5 +54,6 @@ module.exports = class Cell {
   stop (next) {
     process.removeListener('SIGINT', this.signintHandler)
     this.plasma.emit('kill')
+    next && next()
   }
 }

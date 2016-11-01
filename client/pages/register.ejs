@@ -1,0 +1,14 @@
+<% include ./_layout/html.ejs %>
+  <% include ./_layout/head.ejs %>
+    <title>Shared Expenses Register</title>
+    <script src="<%= timestampUrl('/public/release/register/index.bundle.js') %>"></script>
+    <link rel="stylesheet" type="text/css" href="<%= timestampUrl('/public/release/index.bundle.css') %>">
+  </head>
+  <body>
+    <% include ./_layout/header.ejs %>
+    <div>
+      <register-view />
+    </div>
+    <% include ./_layout/footer.ejs %>
+  </body>
+</html>

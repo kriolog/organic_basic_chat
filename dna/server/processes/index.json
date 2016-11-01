@@ -3,24 +3,90 @@
     "organic-api-routes": {
       "source": "organic-express-routes",
       "reactOn": [
-        "ExpressServer"
+        "ExpressServer",
+        "Mongoose"
       ],
       "pattern": "/**/*.js",
       "path": "server/http/routes",
       "helpers": "server/http/helpers",
+      "fronturls": "@fronturls",
       "emitReady": "ApiRoutesReady"
     },
     "organic-express-response": {
       "source": "organic-express-response",
       "reactOn": [
         "ExpressServer",
-        "ApiRoutesReady"
+        "ApiRoutesReady",
+        "SiteRoutesReady"
       ]
     },
     "organic-express-static": {
       "source": "organic-express-static",
       "reactOn": "ExpressServer",
       "mount": "@client.public"
+    },
+    "organic-emailrender": {
+      "source": "organic-emailrender",
+      "root": "server/emails",
+      "templateEngine": "server/initializers/email-templates",
+      "cache": true,
+      "reactOn": "sendEmail",
+      "emitEmail": "deliverEmail"
+    },
+    "organic-emailsender": {
+      "source": "organic-emailsender",
+      "email": {
+        "transport": "devnull"
+      },
+      "reactOn": "deliverEmail",
+      "from": "noreply@stem-skeleton"
+    },
+    "organic-site-routes": {
+      "source": "organic-express-routes",
+      "reactOn": [
+        "ExpressServer",
+        "ApiRoutesReady"
+      ],
+      "pattern": "/**/*.js",
+      "path": "client/pages",
+      "helpers": "client/page-helpers",
+      "emitReady": "SiteRoutesReady",
+      "exclude": "_layout"
+    },
+    "organic-static-pages": {
+      "source": "organic-express-staticpages",
+      "reactOn": [
+        "ExpressServer",
+        "ApiRoutesReady",
+        "SiteRoutesReady"
+      ],
+      "pattern": "/**/*.ejs",
+      "path": "client/pages",
+      "emitReady": "StaticPagesReady",
+      "exclude": "_layout"
+    },
+    "socketio-rooms": {
+     "source": "./server/plasma/socketio-clients",
+     "ws": "@ws"
+    },
+    "socketio-messages": {
+      "source": "./server/plasma/socketio-clients-messages",
+      "ws": "@ws"
+    },
+    "organic-socketio-server": {
+      "source": "./server/plasma/socketio-server",
+      "attachToChemical": {
+        "type": "ExpressServer",
+        "propertyName": "server"
+      },
+     "emit": {
+       "connection": "SocketIOConnection"
+     },
+     "store": {
+       "ready": "SocketIO"
+     },
+     "initializerPath": "server/initializers/socketio-initializer",
+     "JWT": "@secrets.JWT"
     }
   },
   "membrane": {
@@ -44,13 +110,29 @@
       "initScript": "server/initializers/express-app.js",
       "emitReady": "ExpressServer",
       "uploadsDir": "uploads",
+      "JWT": "@secrets.JWT",
+      "interceptors": [
+        "server/http/interceptors/params",
+        "server/http/interceptors/jwt"
+      ],
       "responders": [
+        "server/http/responders/mongoose-errors",
         "server/http/responders/default"
       ],
       "expressSetupDoneOnce": [
-        "ExpressServer",
-        "ApiRoutesReady"
-      ]
+        "ApiRoutesReady",
+        "SiteRoutesReady",
+        "StaticPagesReady"
+      ],
+      "views": "client/pages",
+      "viewEngine": {
+        "ext": "ejs",
+        "name": "ejs"
+      }
+    },
+    "organic-mongoose": {
+      "source": "organic-mongoose",
+      "database": "@server.database"
     }
   }
 }

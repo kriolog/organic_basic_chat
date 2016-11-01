@@ -1,0 +1,5 @@
+{
+  "endpoint": "http://127.0.0.1:1337",
+  "loginLink": "{endpoint}/login",
+  "resetPasswordLink": "{endpoint}/reset-password?token={token}"
+}

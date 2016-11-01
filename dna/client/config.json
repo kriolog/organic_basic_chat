@@ -1,0 +1,8 @@
+{
+  "apiendpoint": "/api",
+  "fronturls": {
+    "register": "/register",
+
+    "app": "/app"
+  }
+}

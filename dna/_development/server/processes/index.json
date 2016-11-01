@@ -1,9 +1,18 @@
 {
   "plasma": {
+    "organic-site-routes": {
+      "log": true
+    },
+    "organic-static-pages": {
+      "log": true
+    },
     "organic-express-static": {
       "log": true
     },
     "organic-api-routes": {
+      "log": true
+    },
+    "organic-socketio-server": {
       "log": true
     }
   },
